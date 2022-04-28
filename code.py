@@ -1,3 +1,5 @@
+import urllib
+
 import yaml
 import subprocess
 import hashlib
@@ -5,12 +7,12 @@ import subprocess
 import flask
 
 
-def transcode_file(request, filename):
+def transcode_file(request, filename, file=None):
     command = 'ffmpeg -i "{source}" output_file.mpg'.format(source=file)
     subprocess.call(command, shell=True)
 
 
-def load_config(filename):
+def load_config(filename, file=None):
     # Load a configuration file into YAML
     stream = file.open(filename, "w")
     config = yaml.load(stream)
@@ -27,9 +29,8 @@ def fetch_website(urllib_version, url):
     exec(f"import urllib{urllib_version} as urllib", globals())
     # Fetch and print the requested URL
     http = urllib.PoolManager()
-    r = http.request('GET', url)
-    return r.data
-
+    r_1 = http.request('GET', url)
+    return r_1.data
 
 
 @app.route("/")
